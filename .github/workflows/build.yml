@@ -52,12 +52,12 @@ jobs:
         echo "workspace-folder=$(pwd)" >> $GITHUB_OUTPUT
         git config --global user.name "Nico170420"
         git config --global user.email "b170420nc@gmail.com"
-        repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp -b twrp-12.1
+        python3 /usr/bin/repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp -b twrp-12.1
       id: pwd
           
     - name: Repo Sync
       run: |
-        repo sync -j$(nproc --all) --force-sync
+        python3 /usr/bin/repo sync -j$(nproc --all) --force-sync
       working-directory: workspace
       
     - name: Clone device tree
@@ -68,7 +68,7 @@ jobs:
     - name: Sync Device Dependencies
       run: |
         bash ${GITHUB_WORKSPACE}/.github/scripts/convert.sh device/oppo/pepm00/twrp.dependencies
-        repo sync -j$(nproc --all)
+        python3 /usr/bin/repo sync -j$(nproc --all)
       working-directory: workspace
       continue-on-error: true
 
